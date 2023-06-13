@@ -1,0 +1,425 @@
+#include <iostream>
+#include <cstring>
+#include <iomanip>
+#include <limits>
+using namespace std;
+int main(){
+    
+    string name,back;
+    char input,modify;
+    int pin,pin1,phonenum,years,accountnum,age,temp2,temp3;
+    double balance,deposit,withdraw,temp,rate[9]{54.38,58.56,68.47,0.39,0.66,0.66,7.64,3};
+    
+    balance=0.00;
+    temp3=0;
+    srand(time(0));
+    system("cls");
+
+    //---------------------------main menu---------------------------------------
+    main:
+    //--------------------------new account--------------------------------------
+    cout<<"\nMain Menu\n";
+    cout<<"1.Create New Account\n2.Log In\nPress * to exit\n>>> ";
+    cin>>input;
+    switch(input){
+        case '1':
+            system("cls");
+            cin.ignore(); 
+            
+            cout<<"\nNEW ACCOUNT CREATION\n";
+            cout<<"Enter Name: ";
+            getline(cin,name);
+            x:
+            for(int k=0;k<name.length();k++){
+                if(isalpha(name[k])||isspace(name[k])){}
+                else{
+                    cout<<"Invalid Name!\nEnter Name: ";
+                    getline(cin,name);
+                    goto x;
+                    }
+            }
+            for(int i=0;i<name.length();i++){
+                if (temp2==0){
+                    name[i]=toupper(name[i]);
+                    temp2=1;}
+                else if(isspace(name[i]))
+                    temp2=0;
+                                
+            }
+            cout<<"Enter Age: ";
+            cin>> age;
+            while(cin.fail()){
+                cout<<"Please enter a number.\n";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cin>>age;
+            }
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout<<"Enter Phone number: "<<"+251-";
+            cin>>phonenum;
+            while(cin.fail()||to_string(phonenum).length()!=9){
+                if (cin.fail()==1)
+                    cout<<"Please enter a number.\n+251-";
+                else
+                    cout<<"Invalid Number! Number must be Nine digits.\n+251-";   
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cin>>phonenum;
+            }
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            //PIN
+            cout<<"Set Four Digit New Pin:"<<" ";
+            cin>>pin;
+            while(cin.fail()||to_string(pin).length()!=4){
+                
+                if (cin.fail()==1)
+                    cout<<"Please enter a number.\n";
+                else
+                    cout<<"Pin Must Be Four Digits.\nSet pin: ";
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cin>>pin;
+            }
+            cout<<"Confirm Pin: ";
+            cin>>pin1;
+            while(pin!=pin1){
+                cout<<"Pin not correct! Try again."<<endl<<"Confirm pin: " ;
+                cin>>pin1;
+            }
+            accountnum=rand()%99999999+10000000;    
+            cout<<"Account Successfully Created.\n";
+            cout<<"Your Account Number is: "<<accountnum<<endl;
+            system("pause");
+            break;
+    //-------------------------------log in-----------------------------------        
+        case '2':{
+            system("cls");
+            cout<<"\nComing Soon.\nPress * to go back.";
+            
+            cin>>back;
+            while(back.compare("*") == 1){
+                cout<<">>>";
+                cin>>back;
+            }
+            system("cls");
+            goto main;
+            break;
+        }
+        case '*':
+            exit(0);
+            break;
+
+        default:
+            system("cls");
+            cout<<"Invalid Selection!\n";
+            goto main;
+            break;    
+
+    }
+    //---------------------------------menu--------------------------------
+    menu:
+    system("cls");
+    cout<<"1.Check balance and Transaction Log\n2.Deposit Money\n3.Withdraw Money\n4.Transfer Money\n5.Edit Profile\n6.Exchange Rates\nPress * to go back.\n>>> ";
+    cin>>input;
+    system("cls");
+    switch (input)
+    {//-------------------------balance---------------------------------
+        case '1':
+            cout<<"\n------------BALANCE-------------\n";
+            cout<<"\nAccount Number: "<<accountnum<<"\nYour available balance is ETB "<<fixed<<setprecision(2)<<balance;
+
+            if(balance>0){
+            cout << "\nEnter years to calculate the interest: ";
+            cin >> years;
+                for (int i = 1; i <= years; i++) {
+                    balance *= (1+0.07);
+                    cout << "balance after " << i << " years: " << balance << endl;
+                }
+            }
+            break;
+    //-------------------------deposit---------------------------------        
+        case '2':
+            deposit:
+            cout<<"\n----------DEPOSIT-----------\n";
+            cout<<"\nChoose currency\n1.ETB - Ethiopian Birr\n2.USD - US Dollar\n3.EUR - Euro\n4.GBP - British Pound\n5.JPY - Japanese Yen\n6.INR - Indian Rupee\n7.RUB - Russian Ruble\n8.CNY - Chinese Yuan\n9.ZAR - South African Rand\nPress * to go back.\n>>> ";
+            cin>>input;
+            system("cls");
+            cout<<"Set amount to deposit in ";
+            switch(input){
+                case '1':
+                    cout<<"Birr>>> ";
+                    cin>>deposit;
+                    while(deposit<0){
+                        cout<<"Error! Try Again. \nSet amount to deposit in Birr>>> ";            
+                        cin>>deposit;
+                    }
+                    balance=deposit+balance;
+                    
+                    break;
+                case '2':
+                    
+                    cout<<"Dollar>>> ";
+                    cin>>deposit;
+                    while(deposit<0){
+                        cout<<"Error! Try Again. \nSet amount to deposit in Dollar>>> ";            
+                        cin>>deposit;
+                    }
+                    balance=balance+(deposit*rate[0]);
+                    break;
+                case '3':
+                    cout<<"Euro>>> ";
+                    cin>>deposit;
+                    while(deposit<0){
+                        cout<<"Error! Try Again. \nSet amount to deposit in Euro>>> ";            
+                        cin>>deposit;
+                    }
+                    balance=balance+(deposit*rate[1]);
+                    break;
+                case '4':
+                cout<<"Pound>>> ";
+                cin>>deposit;
+                while(deposit<0){
+                    cout<<"Error! Try Again. \nSet amount to deposit in Pound>>> ";            
+                    cin>>deposit;
+                }
+                balance=balance+(deposit*rate[2]);
+                break; 
+                case '5':
+                    cout<<"Yen>>> ";
+                    cin>>deposit;
+                    while(deposit<0){
+                        cout<<"Error! Try Again. \nSet amount to deposit in Yen>>> ";            
+                        cin>>deposit;
+                    }
+                    balance=balance+(deposit*rate[3]);
+                    break;    
+                case '6':
+                    cout<<"Rupee>>> ";
+                    cin>>deposit;
+                    while(deposit<0){
+                        cout<<"Error! Try Again. \nSet amount to deposit in Rupee>>> ";            
+                        cin>>deposit;
+                    }
+                    balance=balance+(deposit*rate[4]);
+                    break;
+                case '7':
+                    cout<<"Ruble>>> ";
+                    cin>>deposit;
+                    while(deposit<0){
+                        cout<<"Error! Try Again. \nSet amount to deposit in Ruble>>> ";            
+                        cin>>deposit;
+                    }
+                    balance=balance+(deposit*rate[5]);
+                    break;
+                case '8':
+                    cout<<"Yuan>>> ";
+                    cin>>deposit;
+                    while(deposit<0){
+                        cout<<"Error! Try Again. \nSet amount to deposit in Yuan>>> ";            
+                        cin>>deposit;
+                    }
+                    balance=balance+(deposit*rate[6]);
+                    break;    
+                case '9':
+                    cout<<"Rand>>> ";
+                    cin>>deposit;
+                    while(deposit<0){
+                        cout<<"Error! Try Again. \nSet amount to deposit in Rand>>> ";            
+                        cin>>deposit;
+                    }
+                    balance=balance+(deposit*rate[7]);
+                    break;
+                case '*':
+                    goto menu;
+                    break;    
+                default:
+                    system("cls");
+                    cout<<"Invalid Selection!\n";
+                    goto deposit;
+                    break;      
+            
+            
+            
+            }
+            cout<<"Your available balance is ETB "<<fixed<<setprecision(2)<<balance<<endl;
+            cout<<"Press Enter to go back...\n";
+            cin.ignore();
+            cin.ignore();
+            system("cls");    
+            goto deposit;  
+            
+    //---------------------------------withdraw---------------------------------- 
+        case '3':
+            cout<<"\n-------------WITHDRAW----------------\n";
+            cout<<"\nYour available balance is ETB "<<fixed<<setprecision(2)<<balance<<"\n";
+            cout<<"Press 0 to go back\nSet amount to withdraw>>>> ";
+            cin>>withdraw;
+            temp=balance-withdraw;
+            while(cin.fail()||temp<0){
+                if(cin.fail()){
+                    cout<<"Please enter a number.\n";
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cin>>withdraw;}
+                else if(temp<0){
+                    cout<<"Your balance is insufficent.\nYour balance is ETB "<<balance<<"\nSet amount to withdraw.>>>> ";
+                    cin>>withdraw;
+                    temp=balance-withdraw;
+                }
+            }
+            if(withdraw==0){
+                goto menu;
+            }
+            balance=temp;
+            cout<<"Your Remaining Amount is ETB "<<balance;
+            break;
+    //--------------------------------transfer------------------------------------
+        case '4':
+            cout<<"--------------TRANSFER-------------\n";
+            break;
+    //---------------------------------edit------------------------------------------        
+        case '5':
+            edit:
+            cout<<"\n--------------EDIT-------------\n";
+            cout<<"\nName: "<<name<<endl<<"Age: "<<age<<endl<<"Phone Number: +251-"<<phonenum<<"\nAccount Number: "<<accountnum<<endl;
+            cout<<"-------------------------------\n";
+            cout<<"Choose what to modify.\n1.Name\n2.Age\n3.Phone Number\n4.Pin\nPress * to go back.\n>>> ";
+            cin>>modify;
+            system("cls");
+            switch(modify){
+                case '1':
+                    temp2=0;
+                    cout<<"Name: "<<name<<"\nNew name: ";
+                    cin.ignore();
+                    getline(cin,name);
+                    cout<<"Press Enter to go back...";
+                    cin.ignore();
+                    for(int i=0;i<name.length();i++){
+                        if (temp2==0){
+                            name[i]=toupper(name[i]);
+                            temp2=1;
+                        }
+                        else if(isspace(name[i]))
+                            temp2=0;
+                    }
+                    goto edit;
+                    break;
+                case '2':
+                    cout<<"Age: "<<age<<"\nNew age: ";
+                    cin>>age;
+                    while(cin.fail()){
+                        cout<<"Please enter a number.\n";
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        cin>>age;
+                    }
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout<<"Press Enter to go back...";
+                    cin.ignore();
+                    goto edit;
+                    break; 
+                case '3':
+                    cout<<"Phone Number: +251-"<<phonenum<<"\nNew phone number: +251-";
+                    cin.ignore();
+                    cin>>phonenum;
+                    while(cin.fail()||to_string(phonenum).length()!=9){
+                        if (cin.fail()==1)
+                            cout<<"Please enter a number.\n+251-";
+                        else
+                            cout<<"Invalid Number! Number must be Nine digits.\n+251-";   
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        cin>>phonenum;
+                    }
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    cout<<"Press Enter to go back...";
+                    cin.ignore(); 
+                    goto edit;
+                    break;    
+                    
+                case '4':
+                    int temp1;
+                    if (temp3==3){
+                        cout<<"No more tries.";
+                        goto temp;}
+                    cout<<"Enter current pin\n";
+                    for(int i=3;i>0;i--){
+                        cin.ignore();
+                        cin>>temp1;
+                        while(cin.fail()||to_string(temp1).length()!=4){
+                            if (cin.fail()==1)
+                                cout<<"Please enter a number.\n";
+                            else
+                                cout<<"Pin Must Be Four Digits.\nSet pin: ";
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                            cin>>temp1;
+                        }
+                        if(temp1==pin){
+                            cout<<"Set Four Digit New Pin: ";
+                            cin>>pin;
+                            while(cin.fail()||to_string(pin).length()!=4){
+                            if (cin.fail()==1)
+                                cout<<"Please enter a number.\n";
+                            else
+                                cout<<"Pin Must Be Four Digits.\nSet pin: ";
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                            cin>>pin;
+                            }
+                            cout<<"Confirm Pin: ";
+                            cin>>pin1;
+                            while(pin!=pin1){
+                            cout<<"Pin is not correct! Try again."<<endl<<"Confirm pin: " ;
+                            cin>>pin1;}
+                            cout<<"Pin successfully changed.\n";
+                            break;
+                            }
+                        else{
+                            cout<<"Incorrect pin. "<<i-1<<" tries left.\n";
+                            temp3++;
+                            }
+                    }
+                        temp:    
+                        cout<<"Press Enter to go back...";
+                        cin.ignore();
+                        cin.ignore();
+                        system("cls"); 
+                        goto edit;    
+                        break;
+                case '*':
+                    system("cls");
+                    goto menu;
+                    break;               
+                default:
+                    system("cls");
+                    cout<<"Invalid Selection!";
+                    goto edit;
+                    break;}   
+            break;
+    //------------------------------------exchange rate----------------------------                      
+        case '6':
+            system("cls");
+            cout<<"\n------------EXCHANGE RATE-------------\n";
+            cout<<"\nUS Dollar ----------- "<<rate[0]<<"\nEuro ---------------- "<<rate[1]<<"\nBritish Pound ------- "<<rate[2]<<"\nJapanese Yen -------- "<<rate[3]<<"\nIndian Rupee -------- "<<rate[4]<<"\nRussian Ruble ------- "<<rate[5]<<"\nChinese Yuan -------- "<<rate[6]<<"\nSouth African Rand -- "<<fixed<<setprecision(2)<<rate[7];
+            break;
+        case '*':
+            system("cls");
+            goto main;
+            break;    
+        
+        default:
+            goto menu;
+            break;}
+        
+        cout<<"\nPress Enter to go back...";
+        cin.ignore();
+        cin.ignore();
+        goto menu;
+    
+    return 0;
+}
